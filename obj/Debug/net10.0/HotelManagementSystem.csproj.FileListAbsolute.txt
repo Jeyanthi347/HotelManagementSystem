@@ -1,0 +1,14 @@
+C:\Users\jeyan\source\repos\HotelManagementSystem\HotelManagementSystem\bin\Debug\net10.0\HotelManagementSystem.exe
+C:\Users\jeyan\source\repos\HotelManagementSystem\HotelManagementSystem\bin\Debug\net10.0\HotelManagementSystem.deps.json
+C:\Users\jeyan\source\repos\HotelManagementSystem\HotelManagementSystem\bin\Debug\net10.0\HotelManagementSystem.runtimeconfig.json
+C:\Users\jeyan\source\repos\HotelManagementSystem\HotelManagementSystem\bin\Debug\net10.0\HotelManagementSystem.dll
+C:\Users\jeyan\source\repos\HotelManagementSystem\HotelManagementSystem\bin\Debug\net10.0\HotelManagementSystem.pdb
+C:\Users\jeyan\source\repos\HotelManagementSystem\HotelManagementSystem\obj\Debug\net10.0\HotelManagementSystem.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jeyan\source\repos\HotelManagementSystem\HotelManagementSystem\obj\Debug\net10.0\HotelManagementSystem.AssemblyInfoInputs.cache
+C:\Users\jeyan\source\repos\HotelManagementSystem\HotelManagementSystem\obj\Debug\net10.0\HotelManagementSystem.AssemblyInfo.cs
+C:\Users\jeyan\source\repos\HotelManagementSystem\HotelManagementSystem\obj\Debug\net10.0\HotelManagementSystem.csproj.CoreCompileInputs.cache
+C:\Users\jeyan\source\repos\HotelManagementSystem\HotelManagementSystem\obj\Debug\net10.0\HotelManagementSystem.dll
+C:\Users\jeyan\source\repos\HotelManagementSystem\HotelManagementSystem\obj\Debug\net10.0\refint\HotelManagementSystem.dll
+C:\Users\jeyan\source\repos\HotelManagementSystem\HotelManagementSystem\obj\Debug\net10.0\HotelManagementSystem.pdb
+C:\Users\jeyan\source\repos\HotelManagementSystem\HotelManagementSystem\obj\Debug\net10.0\HotelManagementSystem.genruntimeconfig.cache
+C:\Users\jeyan\source\repos\HotelManagementSystem\HotelManagementSystem\obj\Debug\net10.0\ref\HotelManagementSystem.dll
