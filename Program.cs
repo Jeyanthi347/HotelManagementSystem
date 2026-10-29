@@ -19,3 +19,4 @@ using var host = builder.Build();
 
 Console.WriteLine("Hotel Management System");
 Console.WriteLine("Application configuration completed successfully.");
+Console.ReadKey();

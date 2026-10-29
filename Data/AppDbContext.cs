@@ -1,20 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-
-using Microsoft.EntityFrameworkCore;
+﻿
 using HotelManagementSystem.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 
 namespace HotelManagementSystem.Data
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext(
+        DbContextOptions<AppDbContext> options) : DbContext(options)
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options)
-            : base(options)
-        {
-        }
-
         // Database tables
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Guest> Guests { get; set; }
@@ -31,19 +24,19 @@ namespace HotelManagementSystem.Data
                 entity.HasKey(r => r.RoomId);
 
                 entity.Property(r => r.RoomNumber)
-                      .IsRequired()
-                      .HasMaxLength(10);
+                    .IsRequired()
+                    .HasMaxLength(10);
 
                 entity.Property(r => r.RoomType)
-                      .IsRequired()
-                      .HasMaxLength(50);
+                    .IsRequired()
+                    .HasMaxLength(50);
 
                 entity.Property(r => r.PricePerNight)
-                      .IsRequired()
-                      .HasPrecision(10, 2);
+                    .IsRequired()
+                    .HasPrecision(10, 2);
 
                 entity.Property(r => r.IsAvailable)
-                      .IsRequired();
+                    .IsRequired();
             });
 
             // Guest configuration
@@ -52,16 +45,16 @@ namespace HotelManagementSystem.Data
                 entity.HasKey(g => g.GuestId);
 
                 entity.Property(g => g.GuestName)
-                      .IsRequired()
-                      .HasMaxLength(100);
+                    .IsRequired()
+                    .HasMaxLength(100);
 
                 entity.Property(g => g.Email)
-                      .IsRequired()
-                      .HasMaxLength(100);
+                    .IsRequired()
+                    .HasMaxLength(100);
 
                 entity.Property(g => g.Phone)
-                      .IsRequired()
-                      .HasMaxLength(15);
+                    .IsRequired()
+                    .HasMaxLength(15);
             });
 
             // Booking configuration
@@ -70,32 +63,32 @@ namespace HotelManagementSystem.Data
                 entity.HasKey(b => b.BookingId);
 
                 entity.Property(b => b.GuestId)
-                      .IsRequired();
+                    .IsRequired();
 
                 entity.Property(b => b.RoomId)
-                      .IsRequired();
+                    .IsRequired();
 
                 entity.Property(b => b.CheckInDate)
-                      .IsRequired();
+                    .IsRequired();
 
                 entity.Property(b => b.CheckOutDate)
-                      .IsRequired();
+                    .IsRequired();
 
                 entity.Property(b => b.BookingStatus)
-                      .IsRequired()
-                      .HasMaxLength(30);
+                    .IsRequired()
+                    .HasMaxLength(30);
 
                 // One guest can have multiple bookings
                 entity.HasOne(b => b.Guest)
-                      .WithMany()
-                      .HasForeignKey(b => b.GuestId)
-                      .OnDelete(DeleteBehavior.Restrict);
+                    .WithMany()
+                    .HasForeignKey(b => b.GuestId)
+                    .OnDelete(DeleteBehavior.Restrict);
 
                 // One room can have multiple bookings
                 entity.HasOne(b => b.Room)
-                      .WithMany()
-                      .HasForeignKey(b => b.RoomId)
-                      .OnDelete(DeleteBehavior.Restrict);
+                    .WithMany()
+                    .HasForeignKey(b => b.RoomId)
+                    .OnDelete(DeleteBehavior.Restrict);
             });
 
             // Staff configuration
@@ -104,20 +97,20 @@ namespace HotelManagementSystem.Data
                 entity.HasKey(s => s.StaffId);
 
                 entity.Property(s => s.StaffName)
-                      .IsRequired()
-                      .HasMaxLength(100);
+                    .IsRequired()
+                    .HasMaxLength(100);
 
                 entity.Property(s => s.Role)
-                      .IsRequired()
-                      .HasMaxLength(50);
+                    .IsRequired()
+                    .HasMaxLength(50);
 
                 entity.Property(s => s.Phone)
-                      .IsRequired()
-                      .HasMaxLength(15);
+                    .IsRequired()
+                    .HasMaxLength(15);
 
                 entity.Property(s => s.Salary)
-                      .IsRequired()
-                      .HasPrecision(10, 2);
+                    .IsRequired()
+                    .HasPrecision(10, 2);
             });
         }
     }
