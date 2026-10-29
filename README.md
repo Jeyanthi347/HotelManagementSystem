@@ -17,6 +17,8 @@ The application manages hotel rooms, guests, bookings, and staff. It follows a l
 - Delete rooms
 - Track room availability
 - Manage room types and prices per night
+
+  
 🔹 Guest Management
 
 - View all guests
