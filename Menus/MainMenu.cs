@@ -11,7 +11,7 @@ namespace HotelManagementSystem.Menus
         BookingMenu bookingMenu,
         StaffMenu staffMenu)
     {
-        public void Run()
+        public async Task Run()
         {
             while (true)
             {
@@ -30,16 +30,16 @@ namespace HotelManagementSystem.Menus
                 switch (choice)
                 {
                     case "1":
-                        roomMenu.Show();
+                        await roomMenu.Show();
                         break;
                     case "2":
-                        guestMenu.Show();
+                        await guestMenu.Show();
                         break;
                     case "3":
-                        bookingMenu.Show();
+                        await bookingMenu.Show();
                         break;
                     case "4":
-                        staffMenu.Show();
+                        await staffMenu.Show();
                         break;
                     case "0":
                         Console.WriteLine("Thank you for using the system.");

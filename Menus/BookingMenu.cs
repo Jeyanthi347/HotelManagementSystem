@@ -10,7 +10,7 @@ namespace HotelManagementSystem.Menus
 {
     public class BookingMenu(BookingService bookingService)
     {
-        public void Show()
+        public async Task Show()
         {
             while (true)
             {
@@ -29,16 +29,16 @@ namespace HotelManagementSystem.Menus
                     switch (choice)
                     {
                         case "1":
-                            ViewBookings();
+                            await ViewBookings();
                             break;
                         case "2":
-                            AddBooking();
+                            await AddBooking();
                             break;
                         case "3":
-                            UpdateBooking();
+                            await UpdateBooking();
                             break;
                         case "4":
-                            DeleteBooking();
+                            await DeleteBooking();
                             break;
                         case "0":
                             return;
@@ -54,9 +54,9 @@ namespace HotelManagementSystem.Menus
             }
         }
 
-        private void ViewBookings()
+        private async Task ViewBookings()
         {
-            List<Booking> bookings = bookingService.GetAllBookings();
+            List<Booking> bookings = await bookingService.GetAllBookings();
 
             if (bookings.Count == 0)
             {
@@ -76,7 +76,7 @@ namespace HotelManagementSystem.Menus
             }
         }
 
-        private void AddBooking()
+        private async Task AddBooking()
         {
             Booking booking = new Booking();
 
@@ -94,16 +94,16 @@ namespace HotelManagementSystem.Menus
             booking.CheckOutDate =
                 DateTime.Parse(Console.ReadLine() ?? "");
 
-            bookingService.AddBooking(booking);
+            await bookingService.AddBooking(booking);
             Console.WriteLine("Booking added successfully.");
         }
 
-        private void UpdateBooking()
+        private async Task UpdateBooking()
         {
             Console.Write("Enter booking ID to update: ");
             int id = int.Parse(Console.ReadLine() ?? "0");
 
-            Booking? booking = bookingService.GetBookingById(id);
+            Booking? booking = await bookingService.GetBookingById(id);
 
             if (booking == null)
             {
@@ -128,16 +128,16 @@ namespace HotelManagementSystem.Menus
             Console.Write("Enter booking status: ");
             booking.BookingStatus = Console.ReadLine() ?? "Booked";
 
-            bookingService.UpdateBooking(booking);
+            await bookingService.UpdateBooking(booking);
             Console.WriteLine("Booking updated successfully.");
         }
 
-        private void DeleteBooking()
+        private async Task DeleteBooking()
         {
             Console.Write("Enter booking ID to delete: ");
             int id = int.Parse(Console.ReadLine() ?? "0");
 
-            bookingService.DeleteBooking(id);
+            await bookingService.DeleteBooking(id);
             Console.WriteLine("Booking deleted successfully.");
         }
     }

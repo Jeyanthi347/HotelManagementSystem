@@ -9,17 +9,17 @@ namespace HotelManagementSystem.Services
 {
     public class StaffService(StaffRepository staffRepository)
     {
-        public List<Staff> GetAllStaff()
+        public async Task<List<Staff>> GetAllStaff()
         {
-            return staffRepository.GetAll();
+            return await staffRepository.GetAll();
         }
 
-        public Staff? GetStaffById(int id)
+        public async Task<Staff?> GetStaffById(int id)
         {
-            return staffRepository.GetById(id);
+            return await staffRepository.GetById(id);
         }
 
-        public void AddStaff(Staff staff)
+        public async Task AddStaff(Staff staff)
         {
             if (string.IsNullOrWhiteSpace(staff.StaffName))
             {
@@ -36,12 +36,12 @@ namespace HotelManagementSystem.Services
                 throw new ArgumentException("Salary cannot be negative.");
             }
 
-            staffRepository.Add(staff);
+               await staffRepository.Add(staff);
         }
 
-        public void UpdateStaff(Staff staff)
+        public async Task UpdateStaff(Staff staff)
         {
-            Staff? existingStaff = staffRepository.GetById(staff.StaffId);
+            Staff? existingStaff = await staffRepository.GetById(staff.StaffId);
 
             if (existingStaff == null)
             {
@@ -60,19 +60,19 @@ namespace HotelManagementSystem.Services
                 throw new ArgumentException("Salary cannot be negative.");
             }
 
-            staffRepository.Update(staff);
+            await staffRepository.Update(staff);
         }
 
-        public void DeleteStaff(int id)
+        public async Task DeleteStaff(int id)
         {
-            Staff? staff = staffRepository.GetById(id);
+            Staff? staff = await staffRepository.GetById(id);
 
             if (staff == null)
             {
                 throw new ArgumentException("Staff member not found.");
             }
 
-            staffRepository.Delete(id);
+            await staffRepository.Delete(id);
         }
     }
 }

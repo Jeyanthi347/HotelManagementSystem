@@ -10,42 +10,42 @@ namespace HotelManagementSystem.Repositories
 {
     public class BookingRepository(AppDbContext context)
     {
-        public List<Booking> GetAll()
+        public async Task<List<Booking>> GetAll()
         {
-            return context.Bookings
+            return await context.Bookings
                 .Include(b => b.Guest)
                 .Include(b => b.Room)
-                .ToList();
+                .ToListAsync();
         }
 
-        public Booking? GetById(int id)
+        public async Task<Booking?> GetById(int id)
         {
-            return context.Bookings
+            return await context.Bookings
                 .Include(b => b.Guest)
                 .Include(b => b.Room)
-                .FirstOrDefault(b => b.BookingId == id);
+                .FirstOrDefaultAsync(b => b.BookingId == id);
         }
 
-        public void Add(Booking booking)
+        public async Task Add(Booking booking)
         {
             context.Bookings.Add(booking);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public void Update(Booking booking)
+        public async Task Update(Booking booking)
         {
             context.Bookings.Update(booking);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            Booking? booking = context.Bookings.Find(id);
+            Booking? booking = await context.Bookings.FindAsync(id);
 
             if (booking != null)
             {
                 context.Bookings.Remove(booking);
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
         }
     }

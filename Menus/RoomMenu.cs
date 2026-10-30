@@ -10,7 +10,7 @@ namespace HotelManagementSystem.Menus
 {
     public class RoomMenu(RoomService roomService)
     {
-        public void Show()
+        public async Task Show()
         {
             while (true)
             {
@@ -29,16 +29,16 @@ namespace HotelManagementSystem.Menus
                     switch (choice)
                     {
                         case "1":
-                            ViewRooms();
+                            await ViewRooms();
                             break;
                         case "2":
-                            AddRoom();
+                            await AddRoom();
                             break;
                         case "3":
-                            UpdateRoom();
+                            await UpdateRoom();
                             break;
                         case "4":
-                            DeleteRoom();
+                            await DeleteRoom();
                             break;
                         case "0":
                             return;
@@ -54,9 +54,9 @@ namespace HotelManagementSystem.Menus
             }
         }
 
-        private void ViewRooms()
+        private async Task ViewRooms()
         {
-            List<Room> rooms = roomService.GetAllRooms();
+            List<Room> rooms = await roomService.GetAllRooms();
 
             if (rooms.Count == 0)
             {
@@ -73,7 +73,7 @@ namespace HotelManagementSystem.Menus
             }
         }
 
-        private void AddRoom()
+        private async Task AddRoom()
         {
             Room room = new Room();
 
@@ -89,16 +89,16 @@ namespace HotelManagementSystem.Menus
             Console.Write("Is room available? (true/false): ");
             room.IsAvailable = bool.Parse(Console.ReadLine() ?? "true");
 
-            roomService.AddRoom(room);
+            await roomService.AddRoom(room);
             Console.WriteLine("Room added successfully.");
         }
 
-        private void UpdateRoom()
+        private async Task UpdateRoom()
         {
             Console.Write("Enter room ID to update: ");
             int id = int.Parse(Console.ReadLine() ?? "0");
 
-            Room? room = roomService.GetRoomById(id);
+            Room? room = await roomService.GetRoomById(id);
 
             if (room == null)
             {
@@ -118,16 +118,16 @@ namespace HotelManagementSystem.Menus
             Console.Write("Is room available? (true/false): ");
             room.IsAvailable = bool.Parse(Console.ReadLine() ?? "true");
 
-            roomService.UpdateRoom(room);
+            await roomService.UpdateRoom(room);
             Console.WriteLine("Room updated successfully.");
         }
 
-        private void DeleteRoom()
+        private async Task DeleteRoom()
         {
             Console.Write("Enter room ID to delete: ");
             int id = int.Parse(Console.ReadLine() ?? "0");
 
-            roomService.DeleteRoom(id);
+            await roomService.DeleteRoom(id);
             Console.WriteLine("Room deleted successfully.");
         }
     }

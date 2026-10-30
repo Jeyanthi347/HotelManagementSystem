@@ -9,29 +9,29 @@ namespace HotelManagementSystem.Services
 {
     public class RoomService(RoomRepository roomRepository)
     {
-        public List<Room> GetAllRooms()
+        public async Task<List<Room>> GetAllRooms()
         {
-            return roomRepository.GetAll();
+            return await roomRepository.GetAll();
         }
 
-        public Room? GetRoomById(int id)
+        public async Task<Room?> GetRoomById(int id)
         {
-            return roomRepository.GetById(id);
+            return await roomRepository.GetById(id);
         }
 
-        public void AddRoom(Room room)
+        public async Task AddRoom(Room room)
         {
             if (room.PricePerNight <= 0)
             {
                 throw new ArgumentException("Room price must be greater than zero.");
             }
 
-            roomRepository.Add(room);
+            await roomRepository.Add(room);
         }
 
-        public void UpdateRoom(Room room)
+        public async Task UpdateRoom(Room room)
         {
-            Room? existingRoom = roomRepository.GetById(room.RoomId);
+            Room? existingRoom = await roomRepository.GetById(room.RoomId);
 
             if (existingRoom == null)
             {
@@ -43,19 +43,19 @@ namespace HotelManagementSystem.Services
                 throw new ArgumentException("Room price must be greater than zero.");
             }
 
-            roomRepository.Update(room);
+            await roomRepository.Update(room);
         }
 
-        public void DeleteRoom(int id)
+        public async Task DeleteRoom(int id)
         {
-            Room? room = roomRepository.GetById(id);
+            Room? room = await roomRepository.GetById(id);
 
             if (room == null)
             {
                 throw new ArgumentException("Room not found.");
             }
 
-            roomRepository.Delete(id);
+            await roomRepository.Delete(id);
         }
     }
 }

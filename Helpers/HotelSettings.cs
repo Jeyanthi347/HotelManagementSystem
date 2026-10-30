@@ -28,7 +28,7 @@ namespace HotelManagementSystem.Helpers
             Phone = phone;
         }
 
-        public void DisplaySettings()
+        public async Task DisplaySettings()
         {
             Console.WriteLine("Hotel Name: " + HotelName);
             Console.WriteLine("Address: " + Address);

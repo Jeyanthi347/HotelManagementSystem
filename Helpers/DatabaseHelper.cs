@@ -10,14 +10,14 @@ namespace HotelManagementSystem.Helpers
 {
     public class DatabaseHelper(AppDbContext context)
     {
-        public bool CheckConnection()
+        public async Task<bool> CheckConnection()
         {
-            return context.Database.CanConnect();
+            return await context.Database.CanConnectAsync();
         }
 
-        public void DisplayConnectionStatus()
+        public async Task DisplayConnectionStatus()
         {
-            if (CheckConnection())
+            if (await CheckConnection())
             {
                 Console.WriteLine(
                     "Database connected successfully.");

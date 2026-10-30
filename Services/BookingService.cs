@@ -12,26 +12,26 @@ namespace HotelManagementSystem.Services
         GuestRepository guestRepository,
         RoomRepository roomRepository)
     {
-        public List<Booking> GetAllBookings()
+        public async Task<List<Booking>> GetAllBookings()
         {
-            return bookingRepository.GetAll();
+            return await bookingRepository.GetAll();
         }
 
-        public Booking? GetBookingById(int id)
+        public async Task<Booking?> GetBookingById(int id)
         {
-            return bookingRepository.GetById(id);
+            return await bookingRepository.GetById(id);
         }
 
-        public void AddBooking(Booking booking)
+        public async Task AddBooking(Booking booking)
         {
-            Guest? guest = guestRepository.GetById(booking.GuestId);
+            Guest? guest = await guestRepository.GetById(booking.GuestId);
 
             if (guest == null)
             {
                 throw new ArgumentException("Guest not found.");
             }
 
-            Room? room = roomRepository.GetById(booking.RoomId);
+            Room? room = await roomRepository.GetById(booking.RoomId);
 
             if (room == null)
             {
@@ -51,16 +51,16 @@ namespace HotelManagementSystem.Services
 
             booking.BookingStatus = "Booked";
 
-            bookingRepository.Add(booking);
+            await bookingRepository.Add(booking);
 
             room.IsAvailable = false;
-            roomRepository.Update(room);
+            await roomRepository.Update(room);
         }
 
-        public void UpdateBooking(Booking booking)
+        public async Task UpdateBooking(Booking booking)
         {
             Booking? existingBooking =
-                bookingRepository.GetById(booking.BookingId);
+                await bookingRepository.GetById(booking.BookingId);
 
             if (existingBooking == null)
             {
@@ -83,26 +83,26 @@ namespace HotelManagementSystem.Services
                 throw new ArgumentException("Room not found.");
             }
 
-            bookingRepository.Update(booking);
+            await bookingRepository.Update(booking);
         }
 
-        public void DeleteBooking(int id)
+        public async Task DeleteBooking(int id)
         {
-            Booking? booking = bookingRepository.GetById(id);
+            Booking? booking = await bookingRepository.GetById(id);
 
             if (booking == null)
             {
                 throw new ArgumentException("Booking not found.");
             }
 
-            Room? room = roomRepository.GetById(booking.RoomId);
+            Room? room = await roomRepository.GetById(booking.RoomId);
 
-            bookingRepository.Delete(id);
+            await bookingRepository.Delete(id);
 
             if (room != null)
             {
                 room.IsAvailable = true;
-                roomRepository.Update(room);
+                await roomRepository.Update(room);
             }
         }
     }

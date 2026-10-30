@@ -10,7 +10,7 @@ namespace HotelManagementSystem.Menus
 {
     public class StaffMenu(StaffService staffService)
     {
-        public void Show()
+        public async Task Show()
         {
             while (true)
             {
@@ -29,16 +29,16 @@ namespace HotelManagementSystem.Menus
                     switch (choice)
                     {
                         case "1":
-                            ViewStaff();
+                            await ViewStaff();
                             break;
                         case "2":
-                            AddStaff();
+                            await AddStaff();
                             break;
                         case "3":
-                            UpdateStaff();
+                            await UpdateStaff();
                             break;
                         case "4":
-                            DeleteStaff();
+                            await DeleteStaff();
                             break;
                         case "0":
                             return;
@@ -54,9 +54,9 @@ namespace HotelManagementSystem.Menus
             }
         }
 
-        private void ViewStaff()
+        private async Task ViewStaff()
         {
-            List<Staff> staffMembers = staffService.GetAllStaff();
+            List<Staff> staffMembers = await staffService.GetAllStaff();
 
             if (staffMembers.Count == 0)
             {
@@ -73,7 +73,7 @@ namespace HotelManagementSystem.Menus
             }
         }
 
-        private void AddStaff()
+        private async Task AddStaff()
         {
             Staff staff = new Staff();
 
@@ -89,16 +89,16 @@ namespace HotelManagementSystem.Menus
             Console.Write("Enter salary: ");
             staff.Salary = decimal.Parse(Console.ReadLine() ?? "0");
 
-            staffService.AddStaff(staff);
+            await staffService.AddStaff(staff);
             Console.WriteLine("Staff added successfully.");
         }
 
-        private void UpdateStaff()
+        private async Task UpdateStaff()
         {
             Console.Write("Enter staff ID to update: ");
             int id = int.Parse(Console.ReadLine() ?? "0");
 
-            Staff? staff = staffService.GetStaffById(id);
+            Staff? staff = await staffService.GetStaffById(id);
 
             if (staff == null)
             {
@@ -118,16 +118,16 @@ namespace HotelManagementSystem.Menus
             Console.Write("Enter new salary: ");
             staff.Salary = decimal.Parse(Console.ReadLine() ?? "0");
 
-            staffService.UpdateStaff(staff);
+            await staffService.UpdateStaff(staff);
             Console.WriteLine("Staff updated successfully.");
         }
 
-        private void DeleteStaff()
+        private async Task DeleteStaff()
         {
             Console.Write("Enter staff ID to delete: ");
             int id = int.Parse(Console.ReadLine() ?? "0");
 
-            staffService.DeleteStaff(id);
+            await staffService.DeleteStaff(id);
             Console.WriteLine("Staff deleted successfully.");
         }
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 
 using HotelManagementSystem.Data;
 using HotelManagementSystem.Models;
@@ -9,29 +10,29 @@ namespace HotelManagementSystem.Repositories
 {
     public class StaffRepository(AppDbContext context)
     {
-        public List<Staff> GetAll()
+        public async Task<List<Staff>> GetAll()
         {
-            return context.Staff.ToList();
+            return await context.Staff.ToListAsync();
         }
 
-        public Staff? GetById(int id)
+        public async Task<Staff?> GetById(int id)
         {
-            return context.Staff.Find(id);
+            return await context.Staff.FindAsync(id);
         }
 
-        public void Add(Staff staff)
+        public async Task Add(Staff staff)
         {
             context.Staff.Add(staff);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public void Update(Staff staff)
+        public async Task Update(Staff staff)
         {
             context.Staff.Update(staff);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
             Staff? staff = context.Staff.Find(id);
 

@@ -4,41 +4,42 @@ using System.Text;
 
 using HotelManagementSystem.Data;
 using HotelManagementSystem.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace HotelManagementSystem.Repositories
 {
     public class GuestRepository(AppDbContext context)
     {
-        public List<Guest> GetAll()
+        public async Task<List<Guest>> GetAll()
         {
-            return context.Guests.ToList();
+            return await context.Guests.ToListAsync();
         }
 
-        public Guest? GetById(int id)
+        public async Task<Guest?> GetById(int id)
         {
-            return context.Guests.Find(id);
+            return await context.Guests.FindAsync(id);
         }
 
-        public void Add(Guest guest)
+        public async Task Add(Guest guest)
         {
             context.Guests.Add(guest);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public void Update(Guest guest)
+        public async Task Update(Guest guest)
         {
             context.Guests.Update(guest);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            Guest? guest = context.Guests.Find(id);
+            Guest? guest = await context.Guests.FindAsync(id);
 
             if (guest != null)
             {
                 context.Guests.Remove(guest);
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
         }
     }

@@ -10,7 +10,7 @@ namespace HotelManagementSystem.Menus
 {
     public class GuestMenu(GuestService guestService)
     {
-        public void Show()
+        public async Task Show()
         {
             while (true)
             {
@@ -29,16 +29,16 @@ namespace HotelManagementSystem.Menus
                     switch (choice)
                     {
                         case "1":
-                            ViewGuests();
+                            await ViewGuests();
                             break;
                         case "2":
-                            AddGuest();
+                            await AddGuest();
                             break;
                         case "3":
-                            UpdateGuest();
+                            await UpdateGuest();
                             break;
                         case "4":
-                            DeleteGuest();
+                            await DeleteGuest();
                             break;
                         case "0":
                             return;
@@ -54,9 +54,9 @@ namespace HotelManagementSystem.Menus
             }
         }
 
-        private void ViewGuests()
+        private async Task ViewGuests()
         {
-            List<Guest> guests = guestService.GetAllGuests();
+            List<Guest> guests = await guestService.GetAllGuests();
 
             if (guests.Count == 0)
             {
@@ -72,7 +72,7 @@ namespace HotelManagementSystem.Menus
             }
         }
 
-        private void AddGuest()
+        private async Task AddGuest()
         {
             Guest guest = new Guest();
 
@@ -85,16 +85,16 @@ namespace HotelManagementSystem.Menus
             Console.Write("Enter phone: ");
             guest.Phone = Console.ReadLine() ?? "";
 
-            guestService.AddGuest(guest);
+            await guestService.AddGuest(guest);
             Console.WriteLine("Guest added successfully.");
         }
 
-        private void UpdateGuest()
+        private async Task UpdateGuest()
         {
             Console.Write("Enter guest ID to update: ");
             int id = int.Parse(Console.ReadLine() ?? "0");
 
-            Guest? guest = guestService.GetGuestById(id);
+            Guest? guest = await guestService.GetGuestById(id);
 
             if (guest == null)
             {
@@ -111,16 +111,16 @@ namespace HotelManagementSystem.Menus
             Console.Write("Enter new phone: ");
             guest.Phone = Console.ReadLine() ?? "";
 
-            guestService.UpdateGuest(guest);
+             await guestService.UpdateGuest(guest);
             Console.WriteLine("Guest updated successfully.");
         }
 
-        private void DeleteGuest()
+        private async Task DeleteGuest()
         {
             Console.Write("Enter guest ID to delete: ");
             int id = int.Parse(Console.ReadLine() ?? "0");
 
-            guestService.DeleteGuest(id);
+            await guestService.DeleteGuest(id);
             Console.WriteLine("Guest deleted successfully.");
         }
     }

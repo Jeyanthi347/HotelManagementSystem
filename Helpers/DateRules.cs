@@ -7,14 +7,14 @@ namespace HotelManagementSystem.Helpers
 {
     public class DateRules
     {
-        public bool IsValidBookingDates(
+        public async Task<bool> IsValidBookingDates(
             DateTime checkInDate,
             DateTime checkOutDate)
         {
             return checkOutDate.Date > checkInDate.Date;
         }
 
-        public bool IsCheckInDateValid(DateTime checkInDate)
+        public async Task<bool> IsCheckInDateValid(DateTime checkInDate)
         {
             return checkInDate.Date >= DateTime.Today;
         }

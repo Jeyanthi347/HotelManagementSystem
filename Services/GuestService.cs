@@ -9,17 +9,17 @@ namespace HotelManagementSystem.Services
 {
     public class GuestService(GuestRepository guestRepository)
     {
-        public List<Guest> GetAllGuests()
+        public async Task<List<Guest>> GetAllGuests()
         {
-            return guestRepository.GetAll();
+            return await guestRepository.GetAll();
         }
 
-        public Guest? GetGuestById(int id)
+        public async Task<Guest?> GetGuestById(int id)
         {
-            return guestRepository.GetById(id);
+            return await guestRepository.GetById(id);
         }
 
-        public void AddGuest(Guest guest)
+        public async Task AddGuest(Guest guest)
         {
             if (string.IsNullOrWhiteSpace(guest.GuestName))
             {
@@ -36,12 +36,12 @@ namespace HotelManagementSystem.Services
                 throw new ArgumentException("Guest phone is required.");
             }
 
-            guestRepository.Add(guest);
+            await guestRepository.Add(guest);
         }
 
-        public void UpdateGuest(Guest guest)
+        public async Task UpdateGuest(Guest guest)
         {
-            Guest? existingGuest = guestRepository.GetById(guest.GuestId);
+            Guest? existingGuest = await guestRepository.GetById(guest.GuestId);
 
             if (existingGuest == null)
             {
@@ -56,19 +56,19 @@ namespace HotelManagementSystem.Services
                     "Guest name, email and phone are required.");
             }
 
-            guestRepository.Update(guest);
+            await guestRepository.Update(guest);
         }
 
-        public void DeleteGuest(int id)
+        public async Task DeleteGuest(int id)
         {
-            Guest? guest = guestRepository.GetById(id);
+            Guest? guest = await guestRepository.GetById(id);
 
             if (guest == null)
             {
                 throw new ArgumentException("Guest not found.");
             }
 
-            guestRepository.Delete(id);
+            await guestRepository.Delete(id);
         }
     }
 }

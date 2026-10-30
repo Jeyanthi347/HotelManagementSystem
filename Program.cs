@@ -28,6 +28,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 );
 
 // Register repositories
+//var room=new RoomRepository();
 builder.Services.AddScoped<RoomRepository>();
 builder.Services.AddScoped<GuestRepository>();
 builder.Services.AddScoped<BookingRepository>();
@@ -60,11 +61,11 @@ using (var scope = host.Services.CreateScope())
     var databaseHelper =
         scope.ServiceProvider.GetRequiredService<DatabaseHelper>();
 
-    databaseHelper.DisplayConnectionStatus();
+    await databaseHelper.DisplayConnectionStatus();
 }
 
 // Run the main menu
 var mainMenu =
     host.Services.GetRequiredService<MainMenu>();
 
-mainMenu.Run();
+await mainMenu.Run();
