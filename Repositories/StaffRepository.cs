@@ -39,7 +39,7 @@ namespace HotelManagementSystem.Repositories
             if (staff != null)
             {
                 context.Staff.Remove(staff);
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
         }
     }

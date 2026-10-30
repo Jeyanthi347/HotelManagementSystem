@@ -1,7 +1,6 @@
 ﻿
 using HotelManagementSystem.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection.Emit;
 
 namespace HotelManagementSystem.Data
 {
@@ -13,6 +12,7 @@ namespace HotelManagementSystem.Data
         public DbSet<Guest> Guests { get; set; }
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<Staff> Staff { get; set; }
+        public DbSet<AuditLog> AuditLogs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -112,6 +112,92 @@ namespace HotelManagementSystem.Data
                     .IsRequired()
                     .HasPrecision(10, 2);
             });
+
+            // AuditLog configuration
+            modelBuilder.Entity<AuditLog>(entity =>
+            {
+                entity.HasKey(a => a.AuditLogId);
+
+                entity.Property(a => a.Action)
+                    .IsRequired()
+                    .HasMaxLength(20);
+
+                entity.Property(a => a.TableName)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(a => a.Description)
+                    .IsRequired()
+                    .HasMaxLength(200);
+
+                entity.Property(a => a.Time)
+                    .IsRequired();
+            });
+        }
+
+        // Automatically create audit log entries
+        private void AddAuditLogs()
+        {
+            var changedEntries = ChangeTracker.Entries()
+                .Where(entry =>
+                    entry.Entity is not AuditLog &&
+                    (entry.State == EntityState.Added ||
+                     entry.State == EntityState.Modified ||
+                     entry.State == EntityState.Deleted))
+                .ToList();
+
+            foreach (var entry in changedEntries)
+            {
+                string action = "";
+                string description = "";
+
+                string entityName =
+                    entry.Entity.GetType().Name.ToLower();
+
+                // Check INSERT, UPDATE and DELETE
+                if (entry.State == EntityState.Added)
+                {
+                    action = "INSERT";
+                    description = "New " + entityName + " added";
+                }
+                else if (entry.State == EntityState.Modified)
+                {
+                    action = "UPDATE";
+                    description = entityName + " details updated";
+                }
+                else if (entry.State == EntityState.Deleted)
+                {
+                    action = "DELETE";
+                    description = entityName + " record deleted";
+                }
+
+                string tableName =
+                    entry.Metadata.GetTableName()
+                    ?? entry.Entity.GetType().Name;
+
+                // Add audit record
+                AuditLogs.Add(new AuditLog
+                {
+                    Action = action,
+                    TableName = tableName,
+                    Description = description,
+                    Time = DateTime.Now
+                });
+            }
+        }
+
+        // Asynchronous SaveChanges
+        public override async Task<int> SaveChangesAsync(
+            bool acceptAllChangesOnSuccess,
+            CancellationToken cancellationToken = default)
+        {
+            // Create audit records
+            AddAuditLogs();
+
+            // Save original data and audit records together
+            return await base.SaveChangesAsync(
+                acceptAllChangesOnSuccess,
+                cancellationToken);
         }
     }
 }
